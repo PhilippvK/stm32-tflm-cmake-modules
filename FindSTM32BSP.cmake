@@ -1,7 +1,7 @@
 MESSAGE("STM Board: ${STM_BOARD}")
 IF(STM32_FAMILY STREQUAL "F4")
 	IF(STM_BOARD STREQUAL "STM32F429I-Discovery")
-		SET(BSP_COMPONENTS 
+		SET(BSP_COMPONENTS
                 eeprom
 			    gyroscope
 			    io
@@ -12,18 +12,30 @@ IF(STM32_FAMILY STREQUAL "F4")
 		SET(BSP_HEADERS stm32f429i_discovery.h)
 		SET(BSP_SRC stm32f429i_discovery.c)
 	ENDIF()
-    IF(STM_BOARD STREQUAL "STM324xG_EVAL")
-        SET(BSP_COMPONENTS 
-            lcd 
-            camera 
-            eeprom 
-            io 
-            sd 
-            sram 
+   # IF(STM_BOARD STREQUAL "STM324xG_EVAL")
+   #     SET(BSP_COMPONENTS
+   #         lcd
+   #         camera
+   #         eeprom
+   #         io
+   #         sd
+   #         sram
+   #         ts)
+   #     SET(BSP_PREFIX stm324xg_eval_)
+   #     SET(BSP_HEADERS stm324xg_eval.h)
+   #     SET(BSP_SRC stm324xg_eval.c)
+   # ENDIF()
+    IF(STM_BOARD STREQUAL "STM32F413H-Discovery")
+        SET(BSP_COMPONENTS
+            audio
+            lcd
+            qspi
+            sd
+            psram
             ts)
-        SET(BSP_PREFIX stm324xg_eval_)
-        SET(BSP_HEADERS stm324xg_eval.h)
-        SET(BSP_SRC stm324xg_eval.c)
+        SET(BSP_PREFIX stm32f413h_discovery_)
+        SET(BSP_HEADERS stm32f413h_discovery.h)
+        SET(BSP_SRC stm32f413h_discovery.c)
     ENDIF()
 	set(COMMON_COMPONENTS ampire480272
 			      ampire640480
@@ -40,10 +52,28 @@ IF(STM32_FAMILY STREQUAL "F4")
 			      ov2640
 			      s5k5cag
 			      st7735
+            st7789h2
 			      stmpe1600
 			      stmpe811
 			      ts3510
 			      wm8994
+            ft6x06
+			      )
+ENDIF()
+# TODO: use else-if
+IF(STM32_FAMILY STREQUAL "F7")
+	IF(STM_BOARD STREQUAL "STM32F769I-Discovery")
+		SET(BSP_COMPONENTS
+      audio eeprom lcd qspi sd sdram ts
+        )
+		SET(BSP_PREFIX stm32f769i_discovery_)
+		SET(BSP_HEADERS stm32f769i_discovery.h)
+		SET(BSP_SRC stm32f769i_discovery.c)
+	ENDIF()
+	set(COMMON_COMPONENTS
+    adv7533 ampire480272 ampire640480 exc7200 ft6x06 ft5336 mfxstm32l152
+    mx25l512 n25q128a n25q512a otm8009a ov5640 ov9655 rk043fn48h s5k5cag st7735
+    st7789h2 stmpe811 ts3510 wm8994
 			      )
 ENDIF()
 
@@ -91,7 +121,6 @@ FOREACH(file ${BSP_SRC})
 		PATH_SUFFIXES ${subfolder}
 		CMAKE_FIND_ROOT_PATH_BOTH
 		)
-	MESSAGE(STATUS "BSP file is " ${BSP_${file}_FILE})
 	LIST(APPEND STM32BSP_SOURCES ${BSP_${file}_FILE})
 ENDFOREACH()
 
