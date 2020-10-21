@@ -1,15 +1,15 @@
 INCLUDE(FetchContent)
 
 SET(FETCHCONTENT_UPDATES_DISCONNECTED ON)
-FetchContent_Declare(
+FETCHCONTENT_DECLARE(
     arm_cmsis
     GIT_REPOSITORY https://github.com/ARM-software/CMSIS_5.git
     )
 
-FetchContent_GetProperties(arm_cmsis)
+FETCHCONTENT_GETPROPERTIES(arm_cmsis)
 IF(NOT arm_cmsis_POPULATED)
     MESSAGE(STATUS "Getting most recent ARM CMSIS sources")
-    FetchContent_Populate(arm_cmsis)
+    FETCHCONTENT_POPULATE(arm_cmsis)
     EXECUTE_PROCESS(COMMAND git -C ${arm_cmsis_SOURCE_DIR} checkout develop)
 ENDIF()
 
@@ -205,4 +205,5 @@ SET(CMSISNN_SOURCES
 
 INCLUDE(FindPackageHandleStandardArgs)
 
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(CMSISNN DEFAULT_MSG CMSISNN_INCLUDE_DIRS CMSISNN_SOURCES)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(CMSISNN DEFAULT_MSG CMSISNN_INCLUDE_DIRS
+                                  CMSISNN_SOURCES)

@@ -50,4 +50,6 @@ ENDFOREACH()
 
 INCLUDE(FindPackageHandleStandardArgs)
 
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(STM32Discovery DEFAULT_MSG STM32Discovery_INCLUDE_DIR STM32Discovery_SOURCES)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(STM32Discovery DEFAULT_MSG
+                                  STM32Discovery_INCLUDE_DIR
+                                  STM32Discovery_SOURCES)

@@ -10,7 +10,7 @@ IF(NOT TF_SRC)
     INCLUDE(FetchContent)
     IF(TF_TAG)
         MESSAGE(STATUS "Getting TF tag '${TF_TAG}' and not master")
-        FetchContent_Declare(
+        FETCHCONTENT_DECLARE(
             tf
             GIT_REPOSITORY https://github.com/tensorflow/tensorflow.git
             GIT_PROGRESS FALSE
@@ -20,7 +20,7 @@ IF(NOT TF_SRC)
             )
     ELSEIF(TF_COMMIT)
         MESSAGE(STATUS "Getting TF commit '${TF_COMMIT}' and not master")
-        FetchContent_Declare(
+        FETCHCONTENT_DECLARE(
             tf
             GIT_REPOSITORY https://github.com/tensorflow/tensorflow.git
             GIT_PROGRESS FALSE
@@ -29,7 +29,7 @@ IF(NOT TF_SRC)
             QUIET
             )
     ELSE()
-        FetchContent_Declare(
+        FETCHCONTENT_DECLARE(
             tf
             GIT_REPOSITORY https://github.com/tensorflow/tensorflow.git
             GIT_PROGRESS FALSE
@@ -37,65 +37,65 @@ IF(NOT TF_SRC)
             QUIET
             )
     ENDIF()
-    FetchContent_GetProperties(tf)
+    FETCHCONTENT_GETPROPERTIES(tf)
     IF(NOT tf_POPULATED)
         MESSAGE(STATUS "TensorFlow sources not given/populated, fetching from GH...")
-        FetchContent_Populate(tf)
+        FETCHCONTENT_POPULATE(tf)
     ENDIF()
     SET(TF_SRC ${tf_SOURCE_DIR})
 
-    FetchContent_Declare(
+    FETCHCONTENT_DECLARE(
         flatbuffers
         GIT_REPOSITORY https://github.com/google/flatbuffers.git
         GIT_PROGRESS FALSE
         QUIET
         )
-    FetchContent_GetProperties(flatbuffers)
+    FETCHCONTENT_GETPROPERTIES(flatbuffers)
     IF(NOT flatbuffers_POPULATED)
         MESSAGE(STATUS "Now getting 'flatbuffers'...")
-        FetchContent_Populate(flatbuffers)
+        FETCHCONTENT_POPULATE(flatbuffers)
     ENDIF()
     LIST(APPEND TFL_INC_DIRS ${flatbuffers_SOURCE_DIR}/include)
 
-    FetchContent_Declare(
+    FETCHCONTENT_DECLARE(
         fixedpoint
         GIT_REPOSITORY https://github.com/google/gemmlowp.git
         GIT_PROGRESS FALSE
         QUIET
         )
-    FetchContent_GetProperties(fixedpoint)
+    FETCHCONTENT_GETPROPERTIES(fixedpoint)
     IF(NOT fixedpoint_POPULATED)
         MESSAGE(STATUS "And finaly 'fixedpoint'...")
-        FetchContent_Populate(fixedpoint)
+        FETCHCONTENT_POPULATE(fixedpoint)
     ENDIF()
     LIST(APPEND TFL_INC_DIRS ${fixedpoint_SOURCE_DIR})
 
-    FetchContent_Declare(
+    FETCHCONTENT_DECLARE(
         ruy
         GIT_REPOSITORY https://github.com/google/ruy.git
         GIT_PROGRESS FALSE
         QUIET
         )
-    FetchContent_GetProperties(ruy)
+    FETCHCONTENT_GETPROPERTIES(ruy)
     IF(NOT ruy_POPULATED)
         MESSAGE(STATUS "Oh we also need 'ruy'...")
-        FetchContent_Populate(ruy)
+        FETCHCONTENT_POPULATE(ruy)
     ENDIF()
     LIST(APPEND TFL_INC_DIRS ${ruy_SOURCE_DIR})
 
-    FetchContent_Declare(
+    FETCHCONTENT_DECLARE(
         kissfft
         GIT_REPOSITORY https://github.com/mborgerding/kissfft.git
         GIT_PROGRESS FALSE
         GIT_TAG 36dbc057604f00aacfc0288ddad57e3b21cfc1b8
         QUIET
         )
-    FetchContent_GetProperties(kissfft)
+    FETCHCONTENT_GETPROPERTIES(kissfft)
     IF(NOT kissfft_POPULATED)
       MESSAGE(STATUS "Additionally get 'kissfft'...")
-        FetchContent_Populate(kissfft)
+        FETCHCONTENT_POPULATE(kissfft)
     ENDIF()
-    file(GLOB KISSFFT_SOURCES
+    FILE(GLOB KISSFFT_SOURCES
       "${kissfft_SOURCE_DIR}/*.c"
       "${kissfft_SOURCE_DIR}/tools/kiss_fftr.c"
     )
@@ -139,11 +139,11 @@ IF(TFLM_USE_CMSIS_NN)
   FOREACH(src ${TFL_KERNELS_CMSISNN_SRCS})
     GET_FILENAME_COMPONENT(src_name ${src} NAME)
     SET(src_path "${TFLM_SRC}/kernels/${src_name}")
-	  LIST(FIND TFL_KERNELS_SRCS ${src_path} TFL_KERNELS_SRCS_FOUND_INDEX)
+    LIST(FIND TFL_KERNELS_SRCS ${src_path} TFL_KERNELS_SRCS_FOUND_INDEX)
     IF(${TFL_KERNELS_SRCS_FOUND_INDEX} GREATER_EQUAL 0)
       MESSAGE(STATUS "Replacing TFLM version of ${src_name} by CMSIS-NN variant...")
       LIST(REMOVE_ITEM TFL_KERNELS_SRCS ${src_path})
-	    LIST(APPEND TFL_KERNELS_SRCS ${src})
+      LIST(APPEND TFL_KERNELS_SRCS ${src})
     ENDIF()
   ENDFOREACH()
 
@@ -240,4 +240,5 @@ SET(TFLite_SOURCES
 
 INCLUDE(FindPackageHandleStandardArgs)
 
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(TFLite DEFAULT_MSG TFLite_INCLUDE_DIRS TFLite_SOURCES)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(TFLite DEFAULT_MSG
+                                  TFLite_INCLUDE_DIRS TFLite_SOURCES)

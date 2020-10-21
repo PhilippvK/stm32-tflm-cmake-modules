@@ -3,7 +3,7 @@ IF(NOT STM32Cube_DIR)
     MESSAGE(STATUS "No STM32Cube_DIR specified, using default: " ${STM32Cube_DIR})
 ENDIF()
 
-SET(USBHost_HEADERS 
+SET(USBHost_HEADERS
     Core/Inc/usbh_ctlreq.h
     Core/Inc/usbh_ioreq.h
     Core/Inc/usbh_core.h
@@ -55,7 +55,7 @@ SET(USBHost_COMPONENTS_MSC_SOURCES
     Class/MSC/Src/usbh_msc_scsi.c
 )
 
-SET(USBHost_COMPONENTS_HID_HEADERS  
+SET(USBHost_COMPONENTS_HID_HEADERS
     Class/HID/Inc/usbh_hid_keybd.h
     Class/HID/Inc/usbh_hid_mouse.h
     Class/HID/Inc/usbh_hid_parser.h
@@ -119,5 +119,6 @@ MESSAGE(STATUS "USBHost_SOURCES=${USBHost_SOURCES}")
 
 INCLUDE(FindPackageHandleStandardArgs)
 
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(USBHost DEFAULT_MSG USBHost_INCLUDE_DIRS USBHost_SOURCES)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(USBHost DEFAULT_MSG
+                                  USBHost_INCLUDE_DIRS USBHost_SOURCES)
 
