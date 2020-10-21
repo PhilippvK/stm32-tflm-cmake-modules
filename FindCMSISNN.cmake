@@ -98,6 +98,7 @@ SET(CMSIS_NN_SRCS
     arm_softmax_q7.c
     arm_softmax_with_batch_q7.c
     arm_reshape_s8.c
+    arm_svdf_s8.c
     )
 
 FIND_PATH(CMSIS_NN_INC_DIR ${CMSIS_NN_HEADERS}
@@ -166,6 +167,7 @@ FOREACH(SRC ${CMSIS_NN_SRCS})
         NNSupportFunctions
         PoolingFunctions
         SoftmaxFunctions
+        SVDFunctions
         ReshapeFunctions
         PATHS ${ARM_CMSIS_DIR}/NN/Source
         CMAKE_FIND_ROOT_PATH_BOTH
