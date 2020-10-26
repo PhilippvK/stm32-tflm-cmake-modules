@@ -1,19 +1,24 @@
-INCLUDE(FetchContent)
 
-SET(FETCHCONTENT_UPDATES_DISCONNECTED ON)
-FETCHCONTENT_DECLARE(
-    arm_cmsis
-    GIT_REPOSITORY https://github.com/ARM-software/CMSIS_5.git
-    )
+IF(NOT ARM_CMSIS_SRC)
+  INCLUDE(FetchContent)
 
-FETCHCONTENT_GETPROPERTIES(arm_cmsis)
-IF(NOT arm_cmsis_POPULATED)
+  SET(FETCHCONTENT_UPDATES_DISCONNECTED ON)
+  FETCHCONTENT_DECLARE(
+      arm_cmsis
+      GIT_REPOSITORY https://github.com/ARM-software/CMSIS_5.git
+      )
+
+  FETCHCONTENT_GETPROPERTIES(arm_cmsis)
+  IF(NOT arm_cmsis_POPULATED)
     MESSAGE(STATUS "Getting most recent ARM CMSIS sources")
     FETCHCONTENT_POPULATE(arm_cmsis)
     EXECUTE_PROCESS(COMMAND git -C ${arm_cmsis_SOURCE_DIR} checkout develop)
-ENDIF()
+  ENDIF()
 
-SET(ARM_CMSIS_DIR ${arm_cmsis_SOURCE_DIR}/CMSIS)
+  SET(ARM_CMSIS_DIR ${arm_cmsis_SOURCE_DIR}/CMSIS)
+ELSE()
+  SET(ARM_CMSIS_DIR ${ARM_CMSIS_SRC}/CMSIS)
+ENDIF()
 
 SET(CMSISNN_CORE_HEADERS
     cmsis_compiler.h

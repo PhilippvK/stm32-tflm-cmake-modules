@@ -82,7 +82,10 @@ IF(NOT TF_SRC)
         FETCHCONTENT_POPULATE(ruy)
     ENDIF()
     LIST(APPEND TFL_INC_DIRS ${ruy_SOURCE_DIR})
+ENDIF()
 
+IF(NOT KISSFFT_SRC)
+    INCLUDE(FetchContent)
     FETCHCONTENT_DECLARE(
         kissfft
         GIT_REPOSITORY https://github.com/mborgerding/kissfft.git
@@ -98,6 +101,13 @@ IF(NOT TF_SRC)
     FILE(GLOB KISSFFT_SOURCES
       "${kissfft_SOURCE_DIR}/*.c"
       "${kissfft_SOURCE_DIR}/tools/kiss_fftr.c"
+    )
+    LIST(APPEND KISSFFT_SRCS ${KISSFFT_SOURCES})
+    LIST(APPEND KISSFFT_INC_DIR ${kissfft_SOURCE_DIR})
+ELSE()
+    FILE(GLOB KISSFFT_SOURCES
+      "${KISSFFT_SRC}/*.c"
+      "${KISSFFT_SRC}/tools/kiss_fftr.c"
     )
     LIST(APPEND KISSFFT_SRCS ${KISSFFT_SOURCES})
     LIST(APPEND KISSFFT_INC_DIR ${kissfft_SOURCE_DIR})
