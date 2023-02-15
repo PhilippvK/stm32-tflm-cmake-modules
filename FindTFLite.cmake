@@ -48,6 +48,7 @@ IF(NOT TF_SRC)
         flatbuffers
         GIT_REPOSITORY https://github.com/google/flatbuffers.git
         GIT_PROGRESS FALSE
+        GIT_TAG v1.12.1
         QUIET
         )
     FETCHCONTENT_GETPROPERTIES(flatbuffers)
