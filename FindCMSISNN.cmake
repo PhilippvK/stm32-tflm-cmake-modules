@@ -6,13 +6,14 @@ IF(NOT ARM_CMSIS_SRC)
   FETCHCONTENT_DECLARE(
       arm_cmsis
       GIT_REPOSITORY https://github.com/ARM-software/CMSIS_5.git
+      GIT_TAG 5.8.0
       )
 
   FETCHCONTENT_GETPROPERTIES(arm_cmsis)
   IF(NOT arm_cmsis_POPULATED)
     MESSAGE(STATUS "Getting most recent ARM CMSIS sources")
     FETCHCONTENT_POPULATE(arm_cmsis)
-    EXECUTE_PROCESS(COMMAND git -C ${arm_cmsis_SOURCE_DIR} checkout develop)
+    EXECUTE_PROCESS(COMMAND git -C ${arm_cmsis_SOURCE_DIR} checkout 5.8.0)
   ENDIF()
 
   SET(ARM_CMSIS_DIR ${arm_cmsis_SOURCE_DIR}/CMSIS)
